@@ -29,6 +29,10 @@ const locations = [
   { title: '榕樹', image: 'https://i.imgur.com/QL6UcV4.jpg' },
 ];
 
+let delay = (time) => {
+  return new Promise((resolve) => setTimeout(resolve, time));
+};
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -59,18 +63,20 @@ var app = new Vue({
     },
   },
   methods: {
-    onBingo() {
-      if (this.bingo) return;
+    async onBingo() {
+      this.bingo = null;
+
+      await delay(100);
 
       let difference = this.locations.filter(
         (location) => !this.result.includes(location)
       );
 
+      if (this.total === this.bingoed) return;
+
       this.bingo = difference[Math.floor(Math.random() * difference.length)];
 
       this.result.push(this.bingo);
-
-      this.clearBingo();
 
       localStorage.setItem('bingo', JSON.stringify(this.result));
     },
@@ -80,6 +86,7 @@ var app = new Vue({
     },
     reset() {
       localStorage.clear();
+      this.bingo = null;
       this.result = [];
     },
   },

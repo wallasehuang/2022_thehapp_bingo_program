@@ -1,5 +1,5 @@
-.h-50vh {
-  height: 50vh;
+.h-10vh {
+  height: 10vh;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -20,7 +20,8 @@
 .list-enter, .list-leave-to
 /* .list-leave-active for below version 2.1.8 */ {
   opacity: 0;
-  transform: translateX(30px);
+  /* transform: translateY(-20px); */
+  transform: scale(120%);
 }
 
 .fade-enter-active,

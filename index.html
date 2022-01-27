@@ -11,12 +11,20 @@
   </head>
   <body>
     <div id="app" class="relative container mx-auto h-screen py-12">
-      <h2 class="text-4xl text-center mb-6">2022 尾牙賓果抽獎</h2>
+      <div class="flex items-center justify-center mb-6">
+        <h2 class="text-4xl text-center">2022 尾牙賓果抽獎</h2>
+        <button
+          class="transition duration-150 ease-in-out transform hover:scale-125 bg-emerald-500 text-white font-semibold py-3 px-6 rounded ml-8"
+          @click="onBingo"
+        >
+          Bingo!
+        </button>
+      </div>
       <p class="text-gray-700 text-center mb-6">
         總共 {{ total }}，已抽出 {{ bingoed }}，剩餘 {{ remainder }} 分館
       </p>
-      <section class="flex flex-wrap w-1/2 mx-auto p-3">
-        <div class="flex itmes-center justify-center w-full h-50vh p-6">
+      <section class="flex flex-wrap w-1/2 mx-auto mb-6">
+        <div class="flex itmes-center justify-center w-full h-10vh p-6">
           <transition name="fade">
             <div class="flex items-center justify-center w-full" v-if="bingo">
               <template>
@@ -26,32 +34,24 @@
             </div>
           </transition>
         </div>
-        <button
-          class="transition duration-150 ease-in-out transform hover:scale-125 bg-emerald-500 text-white font-semibold py-3 px-6 rounded mx-auto"
-          @click="onBingo"
-        >
-          Bingo!
-        </button>
       </section>
-      <section
+      <transition-group
+        name="list"
+        class="grid grid-cols-7 gap-2 w-3/4 mx-auto"
+        tag="section"
         ref="list"
-        class="absolute left-0 top-0 w-1/4 py-6 px-12 space-y-3 max-h-screen overflow-y-scroll no-scrollbar"
       >
-        <transition-group name="list" class="space-y-3" tag="div">
-          <template v-for="(location, index) in result">
-            <div
-              class="flex items-center justify-center w-full rounded px-6 py-3 border"
-              :key="index"
-            >
-              <img
-                class="w-10 h-10 rounded-full mx-auto"
-                :src="location.image"
-              />
-              <p class="w-full ml-4">{{location.title}}</p>
-            </div>
-          </template>
-        </transition-group>
-      </section>
+        <template v-for="(location, index) in result">
+          <div
+            class="flex flex-wrap justify-center w-full rounded p-4 border"
+            :key="index"
+          >
+            <img class="w-12 h-12 rounded-full mx-auto" :src="location.image" />
+            <p class="w-full text-center text-xl mt-4">{{location.title}}</p>
+          </div>
+        </template>
+      </transition-group>
+
       <span
         class="fixed right-1 bottom-1 hover:text-red-500 cursor-pointer"
         @click="reset"
